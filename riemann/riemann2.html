@@ -1,0 +1,28 @@
+
+<!DOCTYPE HTML>
+<!--
+  Editorial by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Calculus Bingo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="riemann.css" />
+  </head>
+  <body>
+	<p>What is the area of the region that is shaded light blue?</p>
+	<p>The total area of the square is 25 m^2.</p>
+	<canvas id="canvas" width=500 height=500></canvas>
+	<br />Area of region?<input type="text" id="predArea"></input>
+	<button onclick="guessArea(50);">Submit</button>
+	<span id="actArea"></span>
+	<a href="riemann3.html" id="nextLevel"></a>
+
+	  <script>var xfn = 'Math.floor(x*3/5)*4+11';</script>
+      <script src="riemann.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,65 @@
+﻿
+
+
+Power Rule
+<div class="row">
+	Power: <span id="power">0</span>
+</div>
+<div class="row">
+	Enter Question: <input type="text" id="questionInputpower" onkeypress="handle(event,'power');"><button class="button" onclick="submitQuestion('power');">Submit</button>
+
+</div>
+<div class="row">
+	<span id="questionOutputpower"></span>
+</div>
+<div class="row">
+	<span id="answerpower"></span>
+</div>
+<div class="row" id='gradeButtonspower'>
+	<button class="button" onclick="submitGrade('power','correct');">Correct</button><button class="button" onclick="submitGrade('power','wrong');">Wrong</button>
+</div>
+
+
+
+<div class="row" id='autoQuestionspower'>
+	<button class="button" onclick="automate('power');">Launch</button><button class="button" onclick="autoTest(0,'question','power');">Test</button>Question:<input type="text" id="questionpower" oninput="changeQuestion(0,'power');"><span id="questionTempOutputpower"></span><span id="questionTestpower"></span>
+</div>
+<div class="row" id='autoGraderpower'>
+	
+</div>
+
+
+
+Logarithms and Exponentials
+<div class="row">
+	Logs: <span id="logs">0</span>
+</div>
+<div class="row">
+	Enter Question: <input type="text" id="questionInputlogexp" onkeypress="handle(event,'logexp');"><button class="button" onclick="submitQuestion('logexp');">Submit</button>
+
+</div>
+<div class="row">
+	<span id="questionOutput"></span>
+</div>
+<div class="row">
+	<span id="answerlogexp"></span>
+</div>
+<div class="row" id='gradeButtons'>
+	<button class="button" onclick="submitGrade('logexp','correct');">Correct</button><button class="button" onclick="submitGrade('logexp','wrong');">Wrong</button>
+</div>
+
+
+
+<div class="row" id='autoQuestions'>
+	<button class="button" onclick="automate();">Launch</button><button class="button" onclick="autoTest(0,'question');">Test</button>Question:<input type="text" id="question" oninput="changeQuestion(0,'logexp');"><span id="questionTempOutput"></span><span id="questionTest"></span>
+</div>
+<div class="row" id='autoGrader'>
+	
+</div>
+
+
+
+
+<script src="basic.js"></script>
+<script src="clicker.js"></script>
+<script src="power.js"></script>
