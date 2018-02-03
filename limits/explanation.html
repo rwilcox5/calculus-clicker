@@ -1,0 +1,60 @@
+
+<!DOCTYPE HTML>
+<!--
+  Editorial by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Limits</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../matching/matching.css" />
+  </head>
+  <body>
+
+  	How do you determine the limit of a function as it approaches a value?
+  	<ol>
+	  	<li>Is x approaching +- infinity?</li>
+	  	<li>Is the function approaching a number, an infinity, or an indeterminate value? </li>
+
+	</ol>
+
+	<p>Look at what x is approaching. Is x approaching a finite value (like 0,1,-1/2, or even a constant like a)? Then plug that value into the function. The value of the function at that point does not matter to the limit, but the value of the function near the point is very often close to the value of the function at the point.</p>
+	<div id="infiniteInput"></div>
+
+	<p>Is the result a finite number? This value is probably the limit. Is the result a number divided by 0? The limit is infinite, determine the sign. Is the result indeterminate? I.e. could the answer be anything: 0/0 is most common although it could be 1^infinity, etc...? Then you want to simplify the function until the result can be determined. If you cannot simplify you may need to apply the squeeze theorem.</p>
+	<div id="finiteOutput"></div>
+
+	<p>If the function is 0/0 then try to divide the numerator and denominator by the same expression that equals 0 at the point. Factor the denominator, determine which factor(s) equal 0 and check if those expressions also divide the numerator. If the function is 1^infinity then take a logarithm and rewrite in the form 0/0.</p>
+
+	<p>Is x approaching infinity? You can work through PEMDAS as if x was a really big number and make a rough estimation. When two big numbers are added or multiplied the result is going to be a big number. When a constant value is added to, multiplied by, subtracted from, or divided into a big number the result will still be a big number. However, when a big number is subtracted from another big number or divided by another big number the result depends on which big number is bigger. So it is these cases where the result is unknown that we need to more carefully consider.</p>
+
+	<p>In general, the limits are interesting when the function is a fraction and usually with polynomials in the numerator and the denomintor. Determine the highest power of x in the numerator. Then divide the numerator and the denominator by this power of x. Make sure to divide every term by this power of x. Most of the terms will now have a higher degree of x in the denominator than in the numerator. As x approaches infinity these terms will all be rapidly approaching 0 and will not have any real impact on the function's value. The numerator will simply be a constant plus a bunch of terms that are very close to 0. Then we check the denominator. If all of the terms go to 0 then we have a constant divided by 0 so the function will head to infinity. Check the sign. If at least one term still has a larger power of x in the numerator then the denominator will grow increasingly large until the function goes to 0. If the term with the largest power of x is now a constant then the function will approach the quotient of the coefficients.</p>
+
+	<p>Look at the terms in the numerator and denominator with the largest degree of x. Are the exponents the same? If the numerator has a larger power: infinity. If the denominator has a larger power: 0. If they are the same: divide the coefficients. Be careful about square roots. Determine the real power of x. In sqrt(x^3+1), the largest power of x is essentially x^(3/2). However, when dividing the numerator and denominator by the same power of x you must divide by x^3 on the inside of the radical.</p>
+
+	When are limits used?
+	Asymptotes. 
+	There are two types of asymptotes: horizontal and vertical. Horizontal asymptotes occur as x approaches +- infinity, and vertical asymptotes occur when y approaches +-infinity. 
+
+	<p>Horizontal asymptotes are simpler because we know exactly how to find all of them. We take the limit of f(x) as x approaches +infinity and the limit as x approaches -infinity. We check if the function is approaching a constant value.</p>
+
+	<p>Vertical asymptotes require a little bit more thought. A vertical asymptote occurs when the function approaches +- infinity, and a function approaches +-infinity when the denominator approaches 0. The only exception is if a logarithm is involved. Create a list of every time a denominator approaches 0. These are possible values where a vertical asymptote may occur.</p>
+
+
+
+
+
+	  <script></script>
+	  <script src="../js/sortable.min.js"></script>
+	  <script src="../js/CSSPlugin.min.js"></script>
+	  <script src="../js/Draggable.min.js"></script>
+	  <script src="../js/TweenLite.min.js"></script>
+      <script src="explanation.js"></script>
+
+
+  </body>
+</html>
+

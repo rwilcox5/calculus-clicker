@@ -29,6 +29,10 @@ canvas5 = document.getElementById("canvas5");
 ctx5 = canvas5.getContext("2d");
 createCanvas4(ctx5,canvas5,2,1);
 
+canvas6 = document.getElementById("canvas6");
+ctx6 = canvas6.getContext("2d");
+createCanvas4(ctx6,canvas6,2,1);
+
 var myDelta = document.getElementById('myDelta');
 var myEpsilon = document.getElementById('myEpsilon');
 myDelta.onchange = function(){
@@ -48,33 +52,77 @@ myEpsilon.oninput = function(){
 var myDelta2 = document.getElementById('myDelta2');
 var myEpsilon2 = document.getElementById('myEpsilon2');
 var allDE = [];
+var e;
 myDelta2.onchange = function(){
-	var e = parseFloat(myEpsilon2.value)/10.;
-	createCanvas4(ctx5,canvas5,eval(myDelta2.value),myEpsilon2.value/10.);
+	e = parseFloat(myEpsilon2.value)/10.;
+	createCanvas4(ctx5,canvas5,evalUser(myDelta2.value),myEpsilon2.value/10.);
 }
 
 myEpsilon2.onchange = function(){
-	var e = parseFloat(myEpsilon2.value)/10.;
-	createCanvas4(ctx5,canvas5,eval(myDelta2.value),myEpsilon2.value/10.);
+	e = parseFloat(myEpsilon2.value)/10.;
+	createCanvas4(ctx5,canvas5,evalUser(myDelta2.value),myEpsilon2.value/10.);
 	createRegion(ctx5,canvas5);
 }
 myEpsilon2.oninput = function(){
-	var e = parseFloat(myEpsilon2.value)/10.;
-	createCanvas4(ctx5,canvas5,eval(myDelta2.value),myEpsilon2.value/10.);
+	e = parseFloat(myEpsilon2.value)/10.;
+	createCanvas4(ctx5,canvas5,evalUser(myDelta2.value),myEpsilon2.value/10.);
 	var inDE = false;
 	for (var i =0;i<allDE.length;i++){
-		if (eval(myDelta2.value)==allDE[i][0] && myEpsilon2.value/10.==allDE[i][1]){
+		if (evalUser(myDelta2.value)==allDE[i][0] && myEpsilon2.value/10.==allDE[i][1]){
 			inDE = true;
 			break;
 		}
 	}
 	if (!inDE){
-		allDE.push([eval(myDelta2.value),myEpsilon2.value/10.]);
+		allDE.push([evalUser(myDelta2.value),myEpsilon2.value/10.]);
 	}
 	createRegion(ctx5,canvas5);
-	
 }
 
+var myDelta3 = document.getElementById('myDelta3');
+var myEpsilon3 = document.getElementById('myEpsilon3');
+var zoom3 = document.getElementById('zoom3');
+
+function change3(){
+	e = parseFloat(myEpsilon3.value)/100.;
+	createCanvas4(ctx6,canvas6,evalUser(myDelta3.value),myEpsilon3.value/100.);
+	xfn = 'Math.pow(x,5)+x';
+	drawCurve(ctx6,canvas6,[xcoord(-1*evalUser(myDelta3.value)),ycoord(-1*myEpsilon3.value/100.),xcoord(evalUser(myDelta3.value))-xcoord(-1*evalUser(myDelta3.value)),ycoord(myEpsilon3.value/100.)-ycoord(-1*myEpsilon3.value/100.)]);
+	var inDE = false;
+	for (var i =0;i<allDE.length;i++){
+		if (evalUser(myDelta3.value)==allDE[i][0] && myEpsilon3.value/100.==allDE[i][1]){
+			inDE = true;
+			break;
+		}
+	}
+	if (!inDE){
+		allDE.push([evalUser(myDelta3.value),myEpsilon3.value/100.]);
+	}
+	createRegion(ctx6,canvas6);
+}
+zoom3.oninput = function(){
+	windowGraph = [-.05*parseFloat(zoom3.value),-.05*parseFloat(zoom3.value),.05*parseFloat(zoom3.value),.05*parseFloat(zoom3.value)];
+	change3();
+}
+myDelta3.onchange = function(){
+	e = parseFloat(myEpsilon3.value)/100.;
+	createCanvas4(ctx6,canvas6,evalUser(myDelta3.value),myEpsilon3.value/100.);
+}
+
+myEpsilon3.onchange = function(){
+	e = parseFloat(myEpsilon3.value)/100.;
+	createCanvas4(ctx6,canvas6,evalUser(myDelta3.value),myEpsilon3.value/100.);
+	xfn = 'Math.pow(x,5)+x';
+	drawCurve(ctx6,canvas6,[xcoord(-1*evalUser(myDelta3.value)),ycoord(-1*myEpsilon3.value/100.),xcoord(evalUser(myDelta3.value))-xcoord(-1*evalUser(myDelta3.value)),ycoord(myEpsilon3.value/100.)-ycoord(-1*myEpsilon3.value/100.)]);
+	createRegion(ctx6,canvas6);
+}
+myEpsilon3.oninput = function(){
+	change3();	
+}
+
+function evalUser(user_input){
+	return eval(user_input.replace('min','Math.min'));
+}
 function createRegion(ctx,canvas){
 	allDE.sort(function(a, b) {
 	  return a[0] - b[0];
@@ -279,7 +327,7 @@ function xcoord(rawX){
 	return (rawX-windowGraph[0])/(windowGraph[2]-windowGraph[0])*canvas.width;
 }
 
-function drawCurve(ctx,myrect){
+function drawCurve(ctx,canvas,myrect){
 	ctx.beginPath();
 	ctx.moveTo(0,canvas.height-myf(0));
 	actArea = 0;
@@ -296,17 +344,14 @@ function drawCurve(ctx,myrect){
 		}
 	}
 	ctx.stroke();
-	ctx.beginPath();
 
-	ctx.arc(xcoord(x0),canvas.height-myf(xcoord(x0)),4,0,2*Math.PI);
-	ctx.fill();
 
 }
 
 function updateED(){
 	deltaFlex = parseFloat(document.getElementById('delta').value);
 	var d = deltaFlex;
-	epsilonFlex = eval(document.getElementById('epsilon').value);
+	epsilonFlex = evalUser(document.getElementById('epsilon').value);
 	totalEpsilon += epsilonFlex;
 	windowGraph = [x0-deltaFlex*3,myRawf(x0)-deltaFlex*3,x0+deltaFlex*3,myRawf(x0)+deltaFlex*3]
 	console.log(windowGraph);
