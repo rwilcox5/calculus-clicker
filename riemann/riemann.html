@@ -15,12 +15,13 @@
   <body>
 	<p>What is the area of the region that is shaded light blue?</p>
 	<p>Draw 3 rectangles on the canvas. The computer will tell you the area of the rectangles and then you can make your best guess about the area of the region.</p>
-	<canvas id="canvas" width=500 height=500></canvas>
+	<canvas id="canvas" width=500 height=500 style="background: url('https://lh3.googleusercontent.com/SsRzFeyrgSlpUJO--xSo8VEnEd7zl9ocyXih83oq3UqmMCbu4GVlMUMMbGgqJauKAw=w300') no-repeat; background-size: 100%;"></canvas>
 	<br />Total area of rectangles: <span id="totalArea">0</span>
 	<br />Area of region?<input type="text" id="predArea"></input>
 	<button onclick="guessArea();">Submit</button>
 	<span id="actArea"></span>
 
-      <script src="riemannfixedwidth.js"></script>
+      <script>var xfn = 'pic';</script>
+      <script src="riemann.js"></script>
   </body>
 </html>

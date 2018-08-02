@@ -1,0 +1,28 @@
+
+<!DOCTYPE HTML>
+<!--
+  Editorial by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Calculus Bingo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+  </head>
+  <body>
+	<p>A common optimization problem is to construct a box. Generally a box is better the more volume it has because it can hold more stuff. And the less surface area the better because it costs money to create the outside of the box. Without any other information, a box can have volume as large as you want or surface area as small as 0.</p>
+	<canvas id="canvas1" width=500 height=500>No requirements</canvas>
+  <p>Thus, to make the question interesting, there will be specific requirements. Either the volume or the surface area will be fixed to a certain value. The box below must have a volume of 100000. Try to minimize the surface area. </p>
+  <canvas id="canvas2" width=500 height=500>volume is fixed</canvas>
+  <p>The box below must have a surface area of 100000. Try to maximize the volume of the box.</p>
+  <canvas id="canvas3" width=500 height=500>surface area is fixed</canvas>
+  <p>Hopefully after playing around with these boxes you realized that the optimal box for minimizing surface area or maximizing volume is a cube. If not, play around again and compare cubes to non-cubes. While you do use Calculus to prove that a cube really is the best, there is nothing interesting about this question. To make the question interesting enough to force some Calculus, we can add more constraints. Instead of being able to change the height, width, and length independently you will likely be forced to have a width based on length or something similar.</p>
+
+      <script src="customBox.js"></script>
+      <script src="optimizationBox.js"></script>
+
+  </body>
+</html>

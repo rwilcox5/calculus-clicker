@@ -12,6 +12,9 @@ ctx = canvas.getContext("2d");
 
 
 function myf(x,xfn){
+	if (xfn=='pic'){
+		return 1;
+	}
 
 	return eval(xfn);
 }
@@ -21,6 +24,7 @@ function drawCurve(ctx){
 	ctx.beginPath();
 	ctx.moveTo(0,0);
 	actArea = 0;
+
 	for (var i=0;i<canvas.width+1;i++){
 		ctx.lineTo(i,canvas.height-25*myf(i/100,xfn));
 		actArea+=25*myf(i/100,xfn);
@@ -60,7 +64,9 @@ var startY;
 var rectangles = [];
 var lastRec = [0,0,0,0];
 var totalArea = 0;
-drawCurve(ctx);
+if (xfn !='pic'){
+	drawCurve(ctx);
+}
 
 function handleMouseUp() {
 	isDrawing = false;

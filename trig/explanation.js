@@ -1,16 +1,25 @@
 random0 = document.getElementById('random0');
 randomQ = '';
-newRandom0();
-function newRandom0(answer=-1){
+var nCorrect = [0,0,0,0];
+newRandom0(0);
+
+
+function createProgressBar(width,height,percentGood){
+	progressHTML = '<svg width="'+width.toString()+'" height="'+height.toString()+'"><rect width="'+width.toString()+'" height="'+height.toString()+'" style="fill:rgb(0,0,0);stroke-width:1;stroke:rgb(0,0,0)" />';
+	progressHTML += '<rect width="'+(width*percentGood/100).toString()+'" height="'+height.toString()+'" style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(255,0,0)" />';
+	progressHTML += '</svg>';
+	return progressHTML;
+}
+function newRandom0(ncID,answer=-1){
 	if (randomQ !=''){
 		if (answer==0 && randomQ=='sin(0)'){
-			console.log('Yes!');
+			nCorrect[ncID]++;
 		}
 		else if (answer==1 && randomQ=='cos(0)'){
-			console.log('Yes!');
+			nCorrect[ncID]++;
 		}
 		else {
-			console.log('No!');
+			nCorrect[ncID]=0;
 		}
 	}
 	if (Math.random()<.5){
@@ -19,14 +28,16 @@ function newRandom0(answer=-1){
 	else {
 		randomQ = 'cos(0)';
 	}
-	buttonHTML = '<br /><button onclick="newRandom0(0);">0</button><button onclick="newRandom0(1);">1</button>';
-	random0.innerHTML = randomQ+buttonHTML;
+	buttonHTML = '<br /><button onclick="newRandom0(0,0);">0</button><button onclick="newRandom0(0,1);">1</button><br />';
+	
+	random0.innerHTML = randomQ+buttonHTML+createProgressBar(200,15,nCorrect[ncID]*10);
+
 	
 }
 
 
 
-createList('angleList',['0','pi/6','pi/4','pi/3','pi/2']);
+createList('angleList',['0','pi/6','pi/4','pi/3','pi/2'],'angleProgress',1);
 
 function getRandomArray(arrayLen){
 	this_array = [];
@@ -43,7 +54,7 @@ function getRandomArray(arrayLen){
 	return rand_array;
 }
 
-function checkOrder(theList){
+function checkOrder(theList,eID,orderedList,pID,ncID){
 	allSorted = true;
 	for (var i =0;i<theList.length;i++){
 		if (theList[i][1]!=i){
@@ -51,28 +62,29 @@ function checkOrder(theList){
 		}
 	}
 	if (allSorted){
-		console.log('Correct!');
+		nCorrect[ncID]++;
+		createList(eID,orderedList,pID,ncID);
 	}
 }
 
-function createList(eID,orderedList){
+function createList(eID,orderedList,pID,ncID){
+	document.getElementById(eID).innerHTML = '';
+	document.getElementById(pID).innerHTML = createProgressBar(200,15,nCorrect[ncID]*10);
 	theList = [];
 	rand_array = getRandomArray(orderedList.length);
-	for(var i=0; i<orderedList.length;i++){
+	for(var i=0; i<orderedList.length; i++){
 		theList.push([orderedList[rand_array[i]],rand_array[i]]);
 	}
-
 	for (useri=0;useri<theList.length;useri++){
 		document.getElementById(eID).innerHTML += '<li>'+theList[useri][0]+'</li>';
 	}
-
 	var el = document.getElementById(eID);
 	var sortable = new Sortable(el, {
 		onEnd: function (/**Event*/evt) {
 				var oldName = theList[evt.oldIndex];
 				theList.splice(evt.oldIndex,1);  // element's old index within old parent
 				theList.splice(evt.newIndex,0,oldName);  // element's new index within new parent
-				checkOrder(theList);
+				checkOrder(theList,eID,orderedList,pID,ncID);
 			},
 	});
 
@@ -82,13 +94,18 @@ function createList(eID,orderedList){
 
 
 
-function setClicker(block,spot,eID){
+function setClicker(block,spot,eID,matchArray,ncID){
 	document.getElementById(eID+block.toString()+'-'+spot.toString()).addEventListener("click", function(){
 		if (firstClick[eID][0]>-1){
 			if (letters[eID][firstClick[eID][0]][firstClick[eID][1]][1]==letters[eID][block][spot][1]){
-				document.getElementById(eID+block.toString()+'-'+spot.toString()).style.background = 'yellow';
+				document.getElementById(eID+block.toString()+'-'+spot.toString()).style.background = 'green';
+				document.getElementById(eID+firstClick[eID][0].toString()+'-'+firstClick[eID][1].toString()).style.background = 'green';
 				matched[eID].push(letters[eID][block][spot][1]);
 				firstClick[eID] = [-1,-1];
+				if (matched[eID].length==Math.floor(matchArray.length/2)){
+					nCorrect[ncID]++;
+					createMatching(eID,createMArray(ncID),ncID);
+				}
 			}
 			else{
 				document.getElementById(eID+block.toString()+'-'+spot.toString()).style.background = 'red';
@@ -115,92 +132,102 @@ function setClicker(block,spot,eID){
 }
 
 
-
+function createMArray(maID){
+	if (maID==2){
+		allValues = ['0','1/2','sqrt(2)/2','sqrt(3)/2','1'];
+		allMatchQ = [['sin(0)','cos(pi/2)'],['sin(pi/6)','cos(pi/3)'],['sin(pi/4)','cos(pi/4)'],['sin(pi/3)','cos(pi/6)'],['sin(pi/2)','cos(0)']];
+		matchArray = [];
+		notIN = Math.floor(Math.random()*5);
+		console.log(notIN);
+		for (var i=0;i<5;i++){
+			if (i!=notIN){
+				matchArray.push([allValues[i],i]);
+				matchArray.push([allMatchQ[i][Math.floor(Math.random()*2)],i]);
+			}
+			else{
+				matchArray.push([allValues[i],i]);
+			}
+		}
+	}
+	else if (maID==3){
+		allValues = ['0','1/2','sqrt(2)/2','sqrt(3)/2','1'];
+		allMatchQ = [[1,2],[6,3],[4,4],[3,6],[2,1]];
+		matchArray = [];
+		notIN = Math.floor(Math.random()*5);
+		console.log(notIN);
+		for (var i=0;i<5;i++){
+			if (i!=notIN){
+				
+				if (Math.floor(Math.random()*2)==0){
+					if (Math.floor(Math.random()*2)==0){
+						c = Math.floor(Math.random()*11-5);
+						matchArray.push(['sin('+(c*allMatchQ[i][0]-1).toString()+'pi/'+allMatchQ[i][0].toString()+')',i]);
+						if (c%2==1){
+							matchArray.push([allValues[i],i]);
+						}
+						else{
+							matchArray.push(['-'+allValues[i],i]);
+						}
+					}
+					else{
+						c = Math.floor(Math.random()*11-5);
+						matchArray.push(['sin('+(c*allMatchQ[i][0]+1).toString()+'pi/'+allMatchQ[i][0].toString()+')',i]);
+						if (c%2==0){
+							matchArray.push([allValues[i],i]);
+						}
+						else{
+							matchArray.push(['-'+allValues[i],i]);
+						}
+					}
+				}
+				else{
+					if (Math.floor(Math.random()*2)==0){
+						c = Math.floor(Math.random()*11-5);
+						matchArray.push(['cos('+(c*allMatchQ[i][1]-1).toString()+'pi/'+allMatchQ[i][1].toString()+')',i]);
+						if (c%2==0){
+							matchArray.push([allValues[i],i]);
+						}
+						else{
+							matchArray.push(['-'+allValues[i],i]);
+						}
+					}
+					else{
+						c = Math.floor(Math.random()*11-5);
+						matchArray.push(['cos('+(c*allMatchQ[i][1]+1).toString()+'pi/'+allMatchQ[i][1].toString()+')',i]);
+						if (c%2==0){
+							matchArray.push([allValues[i],i]);
+						}
+						else{
+							matchArray.push(['-'+allValues[i],i]);
+						}
+					}
+				}
+				
+			}
+			else{
+				matchArray.push([allValues[i],i]);
+			}
+		}
+	}
+	return matchArray;
+}
 
 firstClick = {'first':[-1,-1],'second':[-1,-1]};
 var nsize = {'first':3,'second':3};
 var matched = {'first':[],'second':[]};
 var letters = {'first':[],'second':[]};
 
-allValues = ['0','1/2','sqrt(2)/2','sqrt(3)/2','1'];
-allMatchQ = [['sin(0)','cos(pi/2)'],['sin(pi/6)','cos(pi/3)'],['sin(pi/4)','cos(pi/4)'],['sin(pi/3)','cos(pi/6)'],['sin(pi/2)','cos(0)']];
-matchArray = [];
-notIN = Math.floor(Math.random()*5);
-console.log(notIN);
-for (var i=0;i<5;i++){
-	if (i!=notIN){
-		matchArray.push([allValues[i],i]);
-		matchArray.push([allMatchQ[i][Math.floor(Math.random()*2)],i]);
-	}
-	else{
-		matchArray.push([allValues[i],i]);
-	}
-}
 
-createMatching('first',matchArray);
 
-allValues = ['0','1/2','sqrt(2)/2','sqrt(3)/2','1'];
-allMatchQ = [[1,2],[6,3],[4,4],[3,6],[2,1]];
-matchArray = [];
-notIN = Math.floor(Math.random()*5);
-console.log(notIN);
-for (var i=0;i<5;i++){
-	if (i!=notIN){
-		
-		if (Math.floor(Math.random()*2)==0){
-			if (Math.floor(Math.random()*2)==0){
-				c = Math.floor(Math.random()*11-5);
-				matchArray.push(['sin('+(c*allMatchQ[i][0]-1).toString()+'pi/'+allMatchQ[i][0].toString()+')',i]);
-				if (c%2==1){
-					matchArray.push([allValues[i],i]);
-				}
-				else{
-					matchArray.push(['-'+allValues[i],i]);
-				}
-			}
-			else{
-				c = Math.floor(Math.random()*11-5);
-				matchArray.push(['sin('+(c*allMatchQ[i][0]+1).toString()+'pi/'+allMatchQ[i][0].toString()+')',i]);
-				if (c%2==0){
-					matchArray.push([allValues[i],i]);
-				}
-				else{
-					matchArray.push(['-'+allValues[i],i]);
-				}
-			}
-		}
-		else{
-			if (Math.floor(Math.random()*2)==0){
-				c = Math.floor(Math.random()*11-5);
-				matchArray.push(['cos('+(c*allMatchQ[i][1]-1).toString()+'pi/'+allMatchQ[i][1].toString()+')',i]);
-				if (c%2==0){
-					matchArray.push([allValues[i],i]);
-				}
-				else{
-					matchArray.push(['-'+allValues[i],i]);
-				}
-			}
-			else{
-				c = Math.floor(Math.random()*11-5);
-				matchArray.push(['cos('+(c*allMatchQ[i][1]+1).toString()+'pi/'+allMatchQ[i][1].toString()+')',i]);
-				if (c%2==0){
-					matchArray.push([allValues[i],i]);
-				}
-				else{
-					matchArray.push(['-'+allValues[i],i]);
-				}
-			}
-		}
-		
-	}
-	else{
-		matchArray.push([allValues[i],i]);
-	}
-}
+createMatching('first',createMArray(2),2);
+createMatching('second',createMArray(3),3);
 
-createMatching('second',matchArray);
-
-function createMatching(eID,matchArray){
+function createMatching(eID,matchArray,ncID){
+	firstClick[eID]=[-1,-1];
+	nsize[eID]=3;
+	matched[eID]=[];
+	letters[eID]=[];
+	document.getElementById('matching'+eID).innerHTML = '';
 	sortThis = getRandomArray(nsize[eID]*nsize[eID]);
 	for (i=0;i<nsize[eID];i++){
 		letters[eID].push([]);
@@ -217,13 +244,12 @@ function createMatching(eID,matchArray){
 	}
 	for (i=0;i<nsize[eID];i++){
 		for (ii=0;ii<nsize[eID];ii++){
-			setClicker(i,ii,eID);
+			setClicker(i,ii,eID,matchArray,ncID);
 		}
 	}
+	document.getElementById('matchingP'+eID).innerHTML = createProgressBar(200,15,nCorrect[ncID]*10);
 }
 
-
-document.getElementById('quadrant');
 
 var rotationSnap = 90;
 Draggable.create("#knob", {

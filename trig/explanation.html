@@ -13,69 +13,72 @@
     <link rel="stylesheet" href="../matching/matching.css" />
   </head>
   <body>
+  	<div style="width:40%">
+	  	What do you need to know about trigonometry to succeed in Calculus?
+	  	<ol>
+		  	<li>Know the values of sine and cosine for the basic angles.</li>
+		  	<li>Know how the other trig functions relate to sine and cosine.</li>
+		  	<li>Know basic trig identities and how to manipulate them.</li>
+			<li>Know what an inverse trig function is.</li>
+		</ol>
 
-  	What do you need to know about trigonometry to succeed in Calculus?
-  	<ol>
-	  	<li>Know the values of sine and cosine for the basic angles.</li>
-	  	<li>Know how the other trig functions relate to sine and cosine.</li>
-	  	<li>Know basic trig identities and how to manipulate them.</li>
-		<li>Know what an inverse trig function is.</li>
-	</ol>
-
-	Here is the chart you need to just know:
-	<table>
-		<tr>
-			<td>x</td><td>sin(x)</td><td>cos(x)</td>
-		</tr>
-		<tr>
-			<td>0</td><td>0</td><td>1</td>
-		</tr>
-		<tr>
-			<td>pi/6</td><td>1/2</td><td>sqrt(3)/2</td>
-		</tr>
-		<tr>
-			<td>pi/4</td><td>sqrt(2)/2</td><td>sqrt(2)/2</td>
-		</tr>
-		<tr>
-			<td>pi/3</td><td>sqrt(3)/2</td><td>1/2</td>
-		</tr>
-		<tr>
-			<td>pi/2</td><td>1</td><td>0</td>
-		</tr>
-	</table>
-	<p>But you really don't want to try to memorize the whole thing. The angles are all pi divided by a divisor of 12, and these denominators are very important. The values of the functions form a pattern if you write each in the form sqrt(WWW)/2 where WWW is an integer. Do that right now. Rewrite the table so that the five values of sine and the five values of cosine all look like sqrt()/2. I promise that every one can be written this way and if you do it then will see a pattern and you will be able to remember the values.</p> 
-	<p>Once you know the pattern you need to know where to start. Sine starts with sin(0)=0. You can just remember this fact or you can remember that sine is opposite over hypotenuse and when the angle is 0 the opposite side has length 0. Or you can remember that sine is related to the value of y on the x-y plane. And when the angle is 0, the value of y is 0. But if you know the pattern and where it starts then you should be able to quickly know the values of sine and cosine for the five angles above.</p>
-	<div id="random0"></div>
-	<div id="orderAngles"><ol id="angleList"></ol></div>
-	<div id="matchingfirst" class="matching9"></div>
-	<p>What happens when the angle is negative or larger than pi/2? First, if the angle is an unreduced fraction then reduce it fully. I.e if you want to find the sine of 8*pi/12 then you really want to reduce the angle to 2*pi/3 first. Once the fraction is reduced then examine it. Is the numerator equal to a multiple of pi? If you are expected to know the value then the angle really should have a multiple of pi in the numerator. Is the denominator equal to 6, 4, 3, or 2? If the denominator is something else you will need to do more work and probably get a half angle formula involved, but almost all angles you see will have these denominators.</p>
-	<p>Once you know the denominator of the reduced fraction then you can reuse the above chart to determine sine and/or cosine, but you may need to negate the value. Any angle of the form c*pi/6 where c is an integer and the fraction is fully reduced will have sin(c*pi/6)=+-1/2 and cos(c*pi/6)=+-sqrt(3)/2. All that is left is to determine the sign by knowing what quadrant the angle is in. </p>
-	<div id="matchingsecond" class="matching9"></div>
-	<p>Determining the quadrant can be done by arithmetic, but doing it graphically is really easy. If the angle is positive then start on the right side of the x-axis and rotate counter-clockwise. Keep going until you are about to pass c.</p>
-	<img id="knob" src="knob.png" width="400" height="400"/>
-	<div id="knobInfo"></div>
-
-	<div id="tossContainer" style="height:400px; background-image: url('quad.png'); background-repeat: repeat; width:400px;">
+		Here is the chart you need to just know:
+		<table>
+			<tr>
+				<td>x</td><td>sin(x)</td><td>cos(x)</td>
+			</tr>
+			<tr>
+				<td>0</td><td>0</td><td>1</td>
+			</tr>
+			<tr>
+				<td>pi/6</td><td>1/2</td><td>sqrt(3)/2</td>
+			</tr>
+			<tr>
+				<td>pi/4</td><td>sqrt(2)/2</td><td>sqrt(2)/2</td>
+			</tr>
+			<tr>
+				<td>pi/3</td><td>sqrt(3)/2</td><td>1/2</td>
+			</tr>
+			<tr>
+				<td>pi/2</td><td>1</td><td>0</td>
+			</tr>
+		</table>
+		<p>But you really don't want to try to memorize the whole thing. The angles are all pi divided by a divisor of 12, and these denominators are very important. The values of the functions form a pattern if you write each in the form sqrt(WWW)/2 where WWW is an integer. Do that right now. Rewrite the table so that the five values of sine and the five values of cosine all look like sqrt()/2. I promise that every one can be written this way and if you do it then will see a pattern and you will be able to remember the values.</p> 
+		<p>Once you know the pattern you need to know where to start. Sine starts with sin(0)=0. You can just remember this fact or you can remember that sine is opposite over hypotenuse and when the angle is 0 the opposite side has length 0. Or you can remember that sine is related to the value of y on the x-y plane. And when the angle is 0, the value of y is 0. But if you know the pattern and where it starts then you should be able to quickly know the values of sine and cosine for the five angles above.</p>
+		<div id="random0"></div>
+		<div id="orderAngles"><ol id="angleList"></ol><div id="angleProgress"></div></div>
+		<div id="matchingfirst" class="matching9"></div>
+		<div id="matchingPfirst"></div>
+		<p>What happens when the angle is negative or larger than pi/2? First, if the angle is an unreduced fraction then reduce it fully. I.e if you want to find the sine of 8*pi/12 then you really want to reduce the angle to 2*pi/3 first. Once the fraction is reduced then examine it. Is the numerator equal to a multiple of pi? If you are expected to know the value then the angle really should have a multiple of pi in the numerator. Is the denominator equal to 6, 4, 3, or 2? If the denominator is something else you will need to do more work and probably get a half angle formula involved, but almost all angles you see will have these denominators.</p>
+		<p>Once you know the denominator of the reduced fraction then you can reuse the above chart to determine sine and/or cosine, but you may need to negate the value. Any angle of the form c*pi/6 where c is an integer and the fraction is fully reduced will have sin(c*pi/6)=+-1/2 and cos(c*pi/6)=+-sqrt(3)/2. All that is left is to determine the sign by knowing what quadrant the angle is in. </p>
+		<div id="matchingsecond" class="matching9"></div>
+		<div id="matchingPsecond"></div>
+		<p>Determining the quadrant can be done by arithmetic, but doing it graphically is really easy. If the angle is positive then start on the right side of the x-axis and rotate counter-clockwise. Keep going until you are about to pass c.</p>
+		<img id="knob" src="knob.png" width="400" height="400"/>
+		<div id="knobInfo"></div>
 		<div class="box"  style="height:50px; background-color: yellow; width:101px;">Drag and throw me</div>
+		<div id="tossContainer" style="height:400px; background-image: url('quad.png'); background-repeat: repeat; width:400px;">
+			
+		</div>
+
+
+		<div>Sudoku</div>
+
+
+
+		<p>Now that you know sine and cosine, the other trig functions are easy. tan and cot are sin/cos and cos/sin. sec and csc are 1/cos and 1/sin.</p>
 	</div>
 
 
-	<div>Sudoku</div>
 
 
 
-	<p>Now that you know sine and cosine, the other trig functions are easy. tan and cot are sin/cos and cos/sin. sec and csc are 1/cos and 1/sin.</p>
-
-
-
-
-
-	  <script></script>
-	  <script src="../js/sortable.min.js"></script>
-	  <script src="../js/CSSPlugin.min.js"></script>
-	  <script src="../js/Draggable.min.js"></script>
-	  <script src="../js/TweenLite.min.js"></script>
-      <script src="explanation.js"></script>
+	<script></script>
+  <script src="../js/sortable.min.js"></script>
+  <script src="../js/CSSPlugin.min.js"></script>
+  <script src="../js/Draggable.min.js"></script>
+  <script src="../js/TweenLite.min.js"></script>
+  <script src="explanation.js"></script>
 
 
   </body>

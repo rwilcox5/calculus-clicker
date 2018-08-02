@@ -1,122 +1,76 @@
+
+
+
+function myf(rawX,xfn,windowGraph,svgWidth,svgHeight){
+	var x = windowGraph[0]+rawX/svgWidth*(windowGraph[2]-windowGraph[0]);
+	var y = eval(xfn);
+	return svgHeight-(y-windowGraph[1])/(windowGraph[3]-windowGraph[1])*svgHeight;
+}
+
+function myRawf(rawX){
+	var x = rawX;
+	return eval(xfn);
+}
+
+function ycoord(rawY){
+		return (rawY-windowGraph[1])/(windowGraph[3]-windowGraph[1])*canvas.height;
+}
+function xcoord(rawX){
+	return (rawX-windowGraph[0])/(windowGraph[2]-windowGraph[0])*canvas.width;
+}
+
+function drawCurve(thisAnswer,xfn,windowGraph,svgWidth,svgHeight){
+	allPoints = '';
+	for (var i=0;i<svgWidth;i++){
+		yVal = myf(i,xfn,windowGraph,svgWidth,svgHeight);
+		if (!isNaN(yVal) && isFinite(yVal)){
+			allPoints += i.toString()+','+myf(i,xfn,windowGraph,svgWidth,svgHeight).toString()+' ';
+		}
+	}
+	thisAnswer += '<polyline points="'+allPoints+'" style="fill:none;stroke:purple;stroke-width:1" />';
+	return thisAnswer;
+
+}
+
+function svgGraph(windowGraph,xfn,svgWidth,svgHeight){
+	thisAnswer = '<svg height="'+svgHeight+'" width="'+svgWidth+'">'
+	thisAnswer += '<line x1="'+svgWidth/2+'" y1="0" x2="'+svgWidth/2+'" y2="'+svgHeight+'" style="stroke:rgb(55,0,0);stroke-width:1" />';
+	thisAnswer += '<line x1="0" y1="'+svgHeight/2+'" x2="'+svgWidth+'" y2="'+svgHeight/2+'" style="stroke:rgb(55,0,0);stroke-width:1" />';
+	thisAnswer = drawCurve(thisAnswer,xfn,windowGraph,svgWidth,svgHeight);
+	thisAnswer += '</svg>';
+	return thisAnswer;
+}
+
+
+
 nsize = [8,3];
 rowi = 0;
 correctAnswer = [];
 allAnswers = ['linear','quadratic','cubic','logarithmic','exponential','rational','trigonometric'];
 allColors = ['gray','yellow','green','aqua','orange','red','blue'];
 
+dragAnswers = [];
+for (var i=0;i<8;i++){
+	dragAnswers .push([Math.floor(Math.random()*2+1).toString()+'*x+'+Math.floor(Math.random()*3).toString(),'linear']);
+	dragAnswers .push([Math.floor(Math.random()*2+1).toString()+'*x*x-'+Math.floor(Math.random()*5).toString(),'quadratic']);
+	dragAnswers .push(['x*x*x','cubic']);
+	dragAnswers .push(['Math.log(x)','logarithmic']);
+	dragAnswers .push(['Math.pow(2,x)','exponential']);
+	dragAnswers .push(['1/x','rational']);
+	dragAnswers .push(['Math.sin(x)','trigonometric']);
+}
+for (var i=0;i<dragAnswers.length;i++){
+	
+	thisAnswer = svgGraph([-5,-5,5,5],dragAnswers[i][0],50,50);
+	
+	document.getElementById('answerChoices').innerHTML += '<div class="answers" id="'+dragAnswers[i][1]+'">'+thisAnswer+'</div>';
+}
 
-function sinnd(numerator,denom){
-	if (numerator<0){
-		numerator = numerator-2*denom*Math.floor(numerator/denom);
-	}
-	if (denom==1){
-		return '0';
-	}
-	else if (denom==2){
-		if (numerator%4==1){
-			return '1';
-		}
-		else if (numerator%4==3){
-			return '-1';
-		}
-	}
-	else if (denom==3){
-		if (numerator%6==1 || numerator%6==2){
-			return 'sqrt(3)/2';
-		}
-		else if (numerator%6==4 || numerator%6==5){
-			return '-sqrt(3)/2';
-		}
-	}
-	else if (denom==4){
-		if (numerator%8==1 || numerator%8==3){
-			return 'sqrt(2)/2';
-		}
-		else if (numerator%8==5 || numerator%8==7){
-			return '-sqrt(2)/2';
-		}
-	}
-	else if (denom==6){
-		if (numerator%12==1 || numerator%12==5){
-			return '1/2';
-		}
-		else if (numerator%12==7 || numerator%12==11){
-			return '-1/2';
-		}
-	}
-	return 'Unknown';
-}
-function cosnd(numerator,denom){
-	if (numerator<0){
-		numerator = numerator-2*denom*Math.floor(numerator/denom);
-	}
-	if (denom==1){
-		if (numerator%2==0){
-			return '1';
-		}
-		else if (numerator%2==1){
-			return '-1';
-		}
-	}
-	else if (denom==2){
-		return '0';
-	}
-	else if (denom==3){
-		if (numerator%6==1 || numerator%6==5){
-			return '1/2';
-		}
-		else if (numerator%6==4 || numerator%6==2){
-			return '-1/2';
-		}
-	}
-	else if (denom==4){
-		if (numerator%8==1 || numerator%8==7){
-			return 'sqrt(2)/2';
-		}
-		else if (numerator%8==5 || numerator%8==3){
-			return '-sqrt(2)/2';
-		}
-	}
-	else if (denom==6){
-		if (numerator%12==1 || numerator%12==11){
-			return 'sqrt(3)/2';
-		}
-		else if (numerator%12==7 || numerator%12==5){
-			return '-sqrt(3)/2';
-		}
-	}
-	return 'Unknown';
-}
+
 
 function genAnswer(rawValue){
-	numerator = 1;
-	denom = 1;
-	if (rawValue[4]=='0'){
-		numerator = 0;
-	}
-	else{
-		for (var ii=5;ii<rawValue.length-2;ii++){
-			if (rawValue[ii]=='p'){
-				if (rawValue.substring(4,ii)=='-'){
-					numerator = -1;
-				}
-				else{
-					numerator = parseInt(rawValue.substring(4,ii));
-				}
-				
-			}
-			if (rawValue[ii-1]=='i' && rawValue[ii]=='/'){
-				denom = parseInt(rawValue.substring(ii+1,rawValue.length-1));
-			}
-
-		}
-	}
-	trueValue = 'Unknown';
-	if (rawValue.substring(0,4)=='sin('){
-		trueValue = sinnd(numerator,denom);
-	}
-	if (rawValue.substring(0,4)=='cos('){
-		trueValue = cosnd(numerator,denom);
-	}
-	return trueValue;
+	
+	return rawValue;
 }
+
+

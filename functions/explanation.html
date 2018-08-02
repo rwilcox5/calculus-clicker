@@ -1,0 +1,88 @@
+
+<!DOCTYPE HTML>
+<!--
+  Editorial by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Functions</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../css/dragula.min.css" />
+    <style>
+		.spoiler   {color: white;}
+		.spoiler:hover   {color: black;}
+		.spoiler:active   {color: black;}
+	</style>
+  </head>
+  <body>
+  	
+  	<p>A function takes an input and applies some pre-defined rule to determine a particular output. A basic function is something like f(x)=x+3. The input goes inside of the parentheses on the left, and whatever that input is the output is simply the number that is 3 larger. For the function below, drag different inputs into the parentheses to see how the function works.</p>
+
+	f(<span id="function1Input">x</span>)= <span id="function1Output"></span><span id="function1Eval"></span>
+	<br />
+	<span id="function1Inputs"><span>y</span><span>z</span><span>3</span></span>
+
+	f(<span id="function4Input">x</span>)= <span id="function4Output"></span><span id="function4Eval"></span>
+	<br />
+	<span id="function4Inputs"><span>&#128348;</span><span>&#128349;</span><span>&#128350;</span></span>
+
+	<p>If we have several functions that might be used simultaneously then we want to be able to quickly and clearly identify the different functions. When f(x)=x+3, the f is simply a way to name one particular function. We could instead say that g(x)=x+3 or tree(x)=x+3 or emoji(x)=x+3. In all of these cases we take the input and add 3.</p>
+
+	f(<span id="function2Input">x</span>)= <span id="function2Output"></span><span id="function2Eval"></span>
+	<br />
+	<span id="function2Inputs"><span>y</span><span>t</span><span>3</span></span>
+
+	<p>Function composition is when the output of one function is used as the input of a second function.</p>
+
+	f(<span id="function3Input">x</span>)= <span id="function3Output"></span><span id="function3OutputComp"></span><span id="function3Eval"></span>
+	<br />
+	<span id="function3Inputs"><span name='x+3'>g(x)</span><span name="x-2">h(x)</span><span name="3*x">j(x)</span></span>
+	<span id="function3InputsComp"><span>3</span><span>2</span><span>1</span></span>
+
+	<p>Real life functions: f(x)=<a href="https://www.youtube.com/watch?v=">'https://www.youtube.com/watch?v='+x</a>. This function takes an input of an 11 character string and outputs a link to a video. Not every string of characters yields an actual video.</p>
+
+	<p>g(x)=x+1 where x is a string of characters and +1 means replacing the last character with the next character in the alphabet.</p>
+	g(<span id="function5Input">x</span>)= <span id="function5Output"></span><span id="function5Eval"></span>
+	<br />
+	<span id="function5Inputs"><span>ysa</span><span>zzt</span><span>abb</span></span>
+
+	<p>You may have noticed that the + symbol appears in both functions and means two different things. In f(x), the + indicates adding more characters to the beginning of the inputted string. In g(x), the + indicates changing the string itself. Mathematically, the + really only means one thing.</p>
+
+	<p>f(g(x))=<a href="https://www.youtube.com/watch?v=">'https://www.youtube.com/watch?v='+(x+1)</a>. This function is similar to the previous function, but the last letter of the string is changed forward by one character so o becomes p, etc. The output is still a link to the same video, but the comments and related videos no longer appear on the page.</p>
+
+	<p>g(f(x))=<a href="https://www.youtube.com/watch?v=">('https://www.youtube.com/watch?v='+x)+1</a>.</p>
+
+	<p>Can you come up with a function similar to g(x) such that f(g(x)) does not equal g(f(x)). Get creative. There are lots of correct answers.</p>
+
+	<p>For a hint, hover or click the following text: <span class='spoiler'>The function f(x) changes the left of x while g(x) changes the right so they don't really impact each other. Try making g(x) change the left side of x.</span></p>
+
+	This function is similar to the previous function, but the last letter of the string is changed back by one character so p becomes o, etc. If the input is the normal id then this function will likely output a link to an unavailable video.</p>
+
+	<p>What is f(dQw4w9WgXcR)?</p>
+
+	<div id="try to maximize total value of 5 functions"></div>
+
+	<div id="arrange composition in order to maximize value"></div>
+
+	<p>You don't need to memorize the graphs of every function, but the same functions appear again and again in different situations so knowing approximately how they behave is very beneficial.</p>
+
+	<div id="mastermind game"></div>
+
+
+	
+
+
+
+
+	  <script></script>
+	  <script src="../js/sortable.min.js"></script>
+	  <script src="../js/dragula.min.js"></script>
+      <script src="explanation.js"></script>
+
+
+  </body>
+</html>
+
